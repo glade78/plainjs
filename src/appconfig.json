@@ -1,0 +1,19 @@
+{
+controllers : [
+{ "controller_id" : "mo_FileManagement", "classsrc" : "com.app.filemanage.Filemanagement",
+"views" : [
+{ "view_id" : "v_TransferFiles", "xmlSrc" : "views/view1.xml", "default" : "true" , "viewCls" : "null"},
+{ "view_id" : "v_FileSystems", "xmlSrc" : "views/view2.xml", "default" : "true" , "viewCls" : "null"}
+],
+
+"models" : [
+{ "model_id" : "m_TransferFiles", "voCls" : "com.app.models.vo.TransferFilesVO", "viewRef" : "v_TransferFiles"},
+{ "model_id" : "m_FileSystems", "voCls" : "com.app.models.vo.FilesSystemVO", "viewRef" : "v_FileSystems"}
+],
+
+"services" : [
+{ "service_id" : "s_FileManagement" , "classSrc" : "service.FilemanagementService" }
+]
+}
+]
+}
