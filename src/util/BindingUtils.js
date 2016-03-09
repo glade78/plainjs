@@ -21,22 +21,25 @@ this.plainjs = this.plainjs||{};
 
     var BindObjDictionary = {};
 
-    function Binds (srcObj, srcProp,evtname, targObj, targProp) {
-        var srcObject;
-        var srcPropStr = srcProp+"prop";
-        if(srcObj.nodeName) {
-            var eleid = srcObj.id;
-            if (BindObjDictionary[eleid] == null) {
-                BindObjDictionary[eleid] = srcObj;
+    function Binds (_srcObj, _srcProp,_evtname, _targObj, _targProp) {
+        var srcObject = new Object();
+        var srcPropStr = _srcProp+"prop";
+        var srcObjKey = null;
+        if(_srcObj.nodeName) {
+            var eleid = _srcObj.id;
+            srcObjKey = eleid;
+            if (BindObjDictionary[srcObjKey] == null) {
+                BindObjDictionary[srcObjKey] = _srcObj;
             }
-            $(srcObj).on(evtname, synchronise);
-            srcObject = BindObjDictionary[eleid];
+            $(_srcObj).on(_evtname, synchronise);
+            srcObject = BindObjDictionary[srcObjKey];
         }else{
-            if (BindObjDictionary[srcObj] == null) {
-                BindObjDictionary[srcObj] = srcObj;
+            srcObjKey = _srcObj;
+            if (BindObjDictionary[srcObjKey] == null) {
+                BindObjDictionary[srcObjKey] = _srcObj;
             }
-            $(srcObj).on(evtname, synchronise);
-            srcObject = BindObjDictionary[srcObj];
+            $(_srcObj).on(_evtname, synchronise);
+            srcObject = BindObjDictionary[srcObjKey];
         }
 
 
@@ -44,21 +47,21 @@ this.plainjs = this.plainjs||{};
             srcObject.srcPropArray = [];
         }
         if (srcObject[srcPropStr] == null) {
-            srcObject.srcPropArray.push(srcProp);
+            srcObject.srcPropArray.push(_srcProp);
             srcObject[srcPropStr] = new Object();
-            if(typeof(srcObj[srcProp]) === 'function'){
-                srcObject[srcPropStr].value = srcObj[srcProp]();
+            if(typeof(_srcObj[_srcProp]) === 'function'){
+                srcObject[srcPropStr].value = _srcObj[_srcProp]();
             }else{
-                srcObject[srcPropStr].value = srcObj[srcProp];
+                srcObject[srcPropStr].value = _srcObj[_srcProp];
             }
 
         }
         if (srcObject[srcPropStr].bindObjArray == null) {
             srcObject[srcPropStr].bindObjArray = [];
         }
-        var targetObject = getTargetObject(targObj,targProp);
+        var targetObject = getTargetObject(_targObj,_targProp);
         srcObject[srcPropStr].bindObjArray.push(targetObject);
-        BindObjDictionary[srcObj]  = srcObject;
+        BindObjDictionary[srcObjKey]  = srcObject;
     }
 
     function synchronise(event){
@@ -66,10 +69,10 @@ this.plainjs = this.plainjs||{};
         var srcObjfrmEvt = event.target;
         var eleid;
         console.info(typeof  srcObjfrmEvt);
-        if(typeof srcObjfrmEvt === 'object' ) {
-            eleid = srcObjfrmEvt;
+       if(srcObjfrmEvt.id) {
+           eleid = srcObjfrmEvt.id;
         }else {
-            eleid = srcObjfrmEvt.id;
+           eleid = srcObjfrmEvt;
         }
         var srcObject = BindObjDictionary[eleid];
         var srcPropArrayLen = srcObject.srcPropArray.length;
@@ -88,7 +91,6 @@ this.plainjs = this.plainjs||{};
                 srcObject[tmpPropStr].value = srcObject[tmpProp];
             }
         }
-
     }
 
 
