@@ -53,39 +53,3 @@ function onClicked(evt) {
 
 //var req1 = plainjs.AjaxService.getRequest(plainjs.AjaxService.GET,"http://192.168.0.1");
 //console.log("req" +req1.token);
-
-var mapping = {
-    0:['A','B','C'],
-    1:['D','E','F'],
-    //...
-    9:['W','X','Y','Z']
-};
-
-function enumerate(phoneNumber){
-
-    var inputlen = phoneNumber.length;
-    var destAr = mapping[phoneNumber[0]];
-    var srcArray = mapping[phoneNumber[1]];
-    var i=0;
-    while(i < destAr.length){
-
-        var a = getCombination(destAr[i],srcArray);
-        a.toString();
-
-    }
-    i++;
-
-}
-
-function getCombination(val,arA){
-    var arrlen = arA.length;
-    var resultAray = [];
-
-    for(k=0;k<arrlen;k++){
-        resultAray.push(arA[k]+val);
-    }
-
-    return resultAray;
-}
-enumerate([1,0]);
-
